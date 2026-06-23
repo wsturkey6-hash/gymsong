@@ -1,0 +1,41 @@
+[
+  { "name": "背蹲舉", "nameEnglish": "Back Squat", "category": "squat", "primaryMuscle": "股四頭/臀", "equipment": "barbell" },
+  { "name": "前蹲舉", "nameEnglish": "Front Squat", "category": "squat", "primaryMuscle": "股四頭/核心", "equipment": "barbell" },
+  { "name": "高腳杯蹲", "nameEnglish": "Goblet Squat", "category": "squat", "primaryMuscle": "股四頭/臀", "equipment": "dumbbell" },
+  { "name": "保加利亞分腿蹲", "nameEnglish": "Bulgarian Split Squat", "category": "squat", "primaryMuscle": "股四頭/臀", "equipment": "dumbbell" },
+  { "name": "腿推", "nameEnglish": "Leg Press", "category": "squat", "primaryMuscle": "股四頭", "equipment": "machine" },
+
+  { "name": "傳統硬舉", "nameEnglish": "Conventional Deadlift", "category": "hinge", "primaryMuscle": "下背/臀/腿後", "equipment": "barbell" },
+  { "name": "相撲硬舉", "nameEnglish": "Sumo Deadlift", "category": "hinge", "primaryMuscle": "臀/內收肌", "equipment": "barbell" },
+  { "name": "羅馬尼亞硬舉", "nameEnglish": "Romanian Deadlift", "category": "hinge", "primaryMuscle": "腿後/臀", "equipment": "barbell" },
+  { "name": "壺鈴擺盪", "nameEnglish": "Kettlebell Swing", "category": "hinge", "primaryMuscle": "臀/腿後", "equipment": "kettlebell" },
+  { "name": "臀推", "nameEnglish": "Hip Thrust", "category": "hinge", "primaryMuscle": "臀", "equipment": "barbell" },
+  { "name": "早安式體前屈", "nameEnglish": "Good Morning", "category": "hinge", "primaryMuscle": "下背/腿後", "equipment": "barbell" },
+
+  { "name": "槓鈴臥推", "nameEnglish": "Barbell Bench Press", "category": "push", "primaryMuscle": "胸/三頭", "equipment": "barbell" },
+  { "name": "上斜臥推", "nameEnglish": "Incline Bench Press", "category": "push", "primaryMuscle": "上胸/三角肌前", "equipment": "barbell" },
+  { "name": "啞鈴臥推", "nameEnglish": "Dumbbell Bench Press", "category": "push", "primaryMuscle": "胸/三頭", "equipment": "dumbbell" },
+  { "name": "肩推（站姿槓鈴）", "nameEnglish": "Standing Overhead Press", "category": "push", "primaryMuscle": "三角肌/三頭/核心", "equipment": "barbell" },
+  { "name": "啞鈴肩推", "nameEnglish": "Seated Dumbbell Press", "category": "push", "primaryMuscle": "三角肌", "equipment": "dumbbell" },
+  { "name": "雙槓撐體", "nameEnglish": "Dips", "category": "push", "primaryMuscle": "胸/三頭", "equipment": "bodyweight" },
+  { "name": "伏地挺身", "nameEnglish": "Push-up", "category": "push", "primaryMuscle": "胸/三頭", "equipment": "bodyweight" },
+
+  { "name": "引體向上", "nameEnglish": "Pull-up", "category": "pull", "primaryMuscle": "背闊/二頭", "equipment": "bodyweight" },
+  { "name": "反握引體向上", "nameEnglish": "Chin-up", "category": "pull", "primaryMuscle": "背闊/二頭", "equipment": "bodyweight" },
+  { "name": "槓鈴划船", "nameEnglish": "Barbell Row", "category": "pull", "primaryMuscle": "中背/背闊", "equipment": "barbell" },
+  { "name": "啞鈴單手划船", "nameEnglish": "Dumbbell Row", "category": "pull", "primaryMuscle": "中背/背闊", "equipment": "dumbbell" },
+  { "name": "滑輪下拉", "nameEnglish": "Lat Pulldown", "category": "pull", "primaryMuscle": "背闊", "equipment": "cable" },
+  { "name": "坐姿划船", "nameEnglish": "Seated Cable Row", "category": "pull", "primaryMuscle": "中背", "equipment": "cable" },
+  { "name": "面拉", "nameEnglish": "Face Pull", "category": "pull", "primaryMuscle": "後三角/上背", "equipment": "cable" },
+
+  { "name": "棒式", "nameEnglish": "Plank", "category": "core", "primaryMuscle": "核心", "equipment": "bodyweight" },
+  { "name": "側棒式", "nameEnglish": "Side Plank", "category": "core", "primaryMuscle": "腹斜肌", "equipment": "bodyweight" },
+  { "name": "懸吊抬腿", "nameEnglish": "Hanging Leg Raise", "category": "core", "primaryMuscle": "腹直肌/髖屈肌", "equipment": "bodyweight" },
+  { "name": "腹輪", "nameEnglish": "Ab Wheel Rollout", "category": "core", "primaryMuscle": "核心", "equipment": "bodyweight" },
+  { "name": "死蟲式", "nameEnglish": "Dead Bug", "category": "core", "primaryMuscle": "核心", "equipment": "bodyweight" },
+  { "name": "Pallof Press", "nameEnglish": "Pallof Press", "category": "core", "primaryMuscle": "核心抗旋轉", "equipment": "cable" },
+
+  { "name": "農夫走路", "nameEnglish": "Farmer's Walk", "category": "carry", "primaryMuscle": "全身", "equipment": "dumbbell" },
+  { "name": "公事包走路", "nameEnglish": "Suitcase Carry", "category": "carry", "primaryMuscle": "核心/前臂", "equipment": "dumbbell" },
+  { "name": "過頭走路", "nameEnglish": "Overhead Carry", "category": "carry", "primaryMuscle": "肩/核心", "equipment": "kettlebell" }
+]

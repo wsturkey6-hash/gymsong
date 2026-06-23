@@ -6,14 +6,65 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A74B9B7E2FEAE27C00BD8D9D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74B9B7D2FEAE27C00BD8D9D /* WidgetKit.framework */; };
+		A74B9B802FEAE27C00BD8D9D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74B9B7F2FEAE27C00BD8D9D /* SwiftUI.framework */; };
+		A74B9B8F2FEAE27E00BD8D9D /* RestTimerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A74B9B7B2FEAE27C00BD8D9D /* RestTimerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A74B9B8D2FEAE27E00BD8D9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A74B9B5C2FEAE0E500BD8D9D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A74B9B7A2FEAE27C00BD8D9D;
+			remoteInfo = RestTimerWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A74B9B942FEAE27E00BD8D9D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A74B9B8F2FEAE27E00BD8D9D /* RestTimerWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		A74B9B642FEAE0E500BD8D9D /* GymSong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymSong.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A74B9B7B2FEAE27C00BD8D9D /* RestTimerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RestTimerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A74B9B7D2FEAE27C00BD8D9D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A74B9B7F2FEAE27C00BD8D9D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A74B9B902FEAE27E00BD8D9D /* Exceptions for "RestTimerWidget" folder in "RestTimerWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A74B9B7A2FEAE27C00BD8D9D /* RestTimerWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A74B9B662FEAE0E500BD8D9D /* GymSong */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = GymSong;
+			sourceTree = "<group>";
+		};
+		A74B9B812FEAE27C00BD8D9D /* RestTimerWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A74B9B902FEAE27E00BD8D9D /* Exceptions for "RestTimerWidget" folder in "RestTimerWidgetExtension" target */,
+			);
+			path = RestTimerWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,6 +77,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A74B9B782FEAE27C00BD8D9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A74B9B802FEAE27C00BD8D9D /* SwiftUI.framework in Frameworks */,
+				A74B9B7E2FEAE27C00BD8D9D /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -33,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				A74B9B662FEAE0E500BD8D9D /* GymSong */,
+				A74B9B812FEAE27C00BD8D9D /* RestTimerWidget */,
+				A74B9B7C2FEAE27C00BD8D9D /* Frameworks */,
 				A74B9B652FEAE0E500BD8D9D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +103,18 @@
 			isa = PBXGroup;
 			children = (
 				A74B9B642FEAE0E500BD8D9D /* GymSong.app */,
+				A74B9B7B2FEAE27C00BD8D9D /* RestTimerWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A74B9B7C2FEAE27C00BD8D9D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A74B9B7D2FEAE27C00BD8D9D /* WidgetKit.framework */,
+				A74B9B7F2FEAE27C00BD8D9D /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,10 +127,12 @@
 				A74B9B602FEAE0E500BD8D9D /* Sources */,
 				A74B9B612FEAE0E500BD8D9D /* Frameworks */,
 				A74B9B622FEAE0E500BD8D9D /* Resources */,
+				A74B9B942FEAE27E00BD8D9D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A74B9B8E2FEAE27E00BD8D9D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				A74B9B662FEAE0E500BD8D9D /* GymSong */,
@@ -69,6 +143,28 @@
 			productName = GymSong;
 			productReference = A74B9B642FEAE0E500BD8D9D /* GymSong.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A74B9B7A2FEAE27C00BD8D9D /* RestTimerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A74B9B912FEAE27E00BD8D9D /* Build configuration list for PBXNativeTarget "RestTimerWidgetExtension" */;
+			buildPhases = (
+				A74B9B772FEAE27C00BD8D9D /* Sources */,
+				A74B9B782FEAE27C00BD8D9D /* Frameworks */,
+				A74B9B792FEAE27C00BD8D9D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A74B9B812FEAE27C00BD8D9D /* RestTimerWidget */,
+			);
+			name = RestTimerWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = RestTimerWidgetExtension;
+			productReference = A74B9B7B2FEAE27C00BD8D9D /* RestTimerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +177,9 @@
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					A74B9B632FEAE0E500BD8D9D = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					A74B9B7A2FEAE27C00BD8D9D = {
 						CreatedOnToolsVersion = 26.5;
 					};
 				};
@@ -100,12 +199,20 @@
 			projectRoot = "";
 			targets = (
 				A74B9B632FEAE0E500BD8D9D /* GymSong */,
+				A74B9B7A2FEAE27C00BD8D9D /* RestTimerWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A74B9B622FEAE0E500BD8D9D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A74B9B792FEAE27C00BD8D9D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +229,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A74B9B772FEAE27C00BD8D9D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A74B9B8E2FEAE27E00BD8D9D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A74B9B7A2FEAE27C00BD8D9D /* RestTimerWidgetExtension */;
+			targetProxy = A74B9B8D2FEAE27E00BD8D9D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A74B9B6F2FEAE0E500BD8D9D /* Debug */ = {
@@ -256,6 +378,7 @@
 				DEVELOPMENT_TEAM = XJ8V742FB4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +411,7 @@
 				DEVELOPMENT_TEAM = XJ8V742FB4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -303,6 +427,66 @@
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A74B9B922FEAE27E00BD8D9D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XJ8V742FB4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RestTimerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RestTimerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sung.GymSong.RestTimerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A74B9B932FEAE27E00BD8D9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = XJ8V742FB4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RestTimerWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RestTimerWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sung.GymSong.RestTimerWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -327,6 +511,15 @@
 			buildConfigurations = (
 				A74B9B722FEAE0E500BD8D9D /* Debug */,
 				A74B9B732FEAE0E500BD8D9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A74B9B912FEAE27E00BD8D9D /* Build configuration list for PBXNativeTarget "RestTimerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A74B9B922FEAE27E00BD8D9D /* Debug */,
+				A74B9B932FEAE27E00BD8D9D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

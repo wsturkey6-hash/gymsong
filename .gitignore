@@ -1,0 +1,19 @@
+# Xcode
+xcuserdata/
+*.xcuserstate
+*.xcuserdatad/
+DerivedData/
+
+# macOS
+.DS_Store
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Package.resolved
+
+# CocoaPods (not used yet but standard)
+Pods/
+
+# Carthage (not used yet but standard)
+Carthage/Build/
