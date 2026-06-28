@@ -79,6 +79,31 @@ struct SettingsView: View {
                             ForEach(ExperienceLevel.allCases) { Text($0.label).tag($0) }
                         }
                     }
+
+                    Section {
+                        ForEach(Equipment.allCases) { item in
+                            Toggle(item.label, isOn: Binding(
+                                get: { profile.equipment.contains(item) },
+                                set: { isOn in
+                                    if isOn {
+                                        if !profile.equipment.contains(item) {
+                                            profile.equipment.append(item)
+                                            profile.equipment.sort { $0.rawValue < $1.rawValue }
+                                        }
+                                    } else {
+                                        profile.equipment.removeAll { $0 == item }
+                                    }
+                                }
+                            ))
+                        }
+                    } header: {
+                        Text("可用器材（可複選）")
+                    } footer: {
+                        if profile.equipment.isEmpty {
+                            Text("至少選一項，否則 AI 無法生成課表。")
+                                .foregroundStyle(.red)
+                        }
+                    }
                 }
             }
             .navigationTitle("設定")
