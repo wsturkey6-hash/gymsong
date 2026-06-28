@@ -12,8 +12,8 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Claude API Key") {
-                    SecureField(hasStoredKey ? "已儲存（再輸入會覆蓋）" : "sk-ant-...", text: $apiKeyInput)
+                Section("Gemini API Key") {
+                    SecureField(hasStoredKey ? "已儲存（再輸入會覆蓋）" : "AIza...", text: $apiKeyInput)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
 
@@ -21,7 +21,7 @@ struct SettingsView: View {
                         Button("儲存") {
                             let trimmed = apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines)
                             guard !trimmed.isEmpty else { return }
-                            KeychainStore.save(trimmed, for: .anthropicAPIKey)
+                            KeychainStore.save(trimmed, for: .geminiAPIKey)
                             apiKeyInput = ""
                             hasStoredKey = true
                             showSavedToast = true
@@ -32,13 +32,13 @@ struct SettingsView: View {
 
                         if hasStoredKey {
                             Button("清除", role: .destructive) {
-                                KeychainStore.delete(.anthropicAPIKey)
+                                KeychainStore.delete(.geminiAPIKey)
                                 hasStoredKey = false
                             }
                         }
                     }
 
-                    Text("API Key 存在裝置 Keychain，不會傳出去。前往 console.anthropic.com 取得。")
+                    Text("API Key 存在裝置 Keychain，不會傳出去。前往 aistudio.google.com/apikey 免費取得（Gemini 2.5 Flash 個人使用通常在每日免費額度內）。")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -83,7 +83,7 @@ struct SettingsView: View {
             }
             .navigationTitle("設定")
             .onAppear {
-                hasStoredKey = KeychainStore.read(.anthropicAPIKey) != nil
+                hasStoredKey = KeychainStore.read(.geminiAPIKey) != nil
             }
             .overlay(alignment: .bottom) {
                 if showSavedToast {

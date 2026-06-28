@@ -6,26 +6,28 @@ enum AIError: LocalizedError {
     case invalidResponse
     case decoding(Error)
     case network(Error)
+    case blockedByModel(reason: String)
 
     var errorDescription: String? {
         switch self {
-        case .missingAPIKey: return "尚未設定 Claude API Key（請到「設定」輸入）"
+        case .missingAPIKey: return "尚未設定 Gemini API Key（請到「設定」輸入）"
         case .httpError(let status, let body): return "API 錯誤 \(status)：\(body)"
         case .invalidResponse: return "API 回應格式不正確"
         case .decoding(let err): return "解析回應失敗：\(err.localizedDescription)"
         case .network(let err): return "網路錯誤：\(err.localizedDescription)"
+        case .blockedByModel(let reason): return "模型拒絕回應：\(reason)"
         }
     }
 }
 
-/// Claude API client. Personal-use only — API key stored in Keychain.
+/// Gemini Flash API client. Personal-use only — API key stored in Keychain.
 struct AIService {
-    nonisolated static let endpoint = URL(string: "https://api.anthropic.com/v1/messages")!
-    nonisolated static let apiVersion = "2023-06-01"
-    nonisolated static let defaultModel = "claude-sonnet-4-6"
+    nonisolated static let baseURL = "https://generativelanguage.googleapis.com/v1beta/models"
+    nonisolated static let defaultModel = "gemini-2.5-flash"
 
-    /// Send a request and return the first text block from the response.
-    /// `jsonSchema` (if provided) constrains the model output via `output_config.format`.
+    /// Send a request and return the text from the first candidate.
+    /// `jsonSchema` (if provided) constrains the model output via
+    /// `generationConfig.responseSchema` (with `responseMimeType: application/json`).
     static func generate(
         system: String,
         user: String,
@@ -33,33 +35,41 @@ struct AIService {
         model: String = defaultModel,
         maxTokens: Int = 16000
     ) async throws -> String {
-        guard let apiKey = KeychainStore.read(.anthropicAPIKey), !apiKey.isEmpty else {
+        guard let apiKey = KeychainStore.read(.geminiAPIKey), !apiKey.isEmpty else {
             throw AIError.missingAPIKey
         }
 
-        var body: [String: Any] = [
-            "model": model,
-            "max_tokens": maxTokens,
-            "system": system,
-            "messages": [
-                ["role": "user", "content": user],
-            ],
+        guard let endpoint = URL(string: "\(baseURL)/\(model):generateContent") else {
+            throw AIError.invalidResponse
+        }
+
+        var generationConfig: [String: Any] = [
+            "maxOutputTokens": maxTokens,
+            "temperature": 0.7,
         ]
         if let jsonSchema {
-            body["output_config"] = [
-                "format": [
-                    "type": "json_schema",
-                    "schema": jsonSchema,
-                ],
-            ]
+            generationConfig["responseMimeType"] = "application/json"
+            generationConfig["responseSchema"] = jsonSchema
         }
+
+        let body: [String: Any] = [
+            "systemInstruction": [
+                "parts": [["text": system]],
+            ],
+            "contents": [
+                [
+                    "role": "user",
+                    "parts": [["text": user]],
+                ],
+            ],
+            "generationConfig": generationConfig,
+        ]
 
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
         request.timeoutInterval = 300
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
-        request.setValue(apiVersion, forHTTPHeaderField: "anthropic-version")
+        request.setValue(apiKey, forHTTPHeaderField: "x-goog-api-key")
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         let data: Data
@@ -77,10 +87,22 @@ struct AIService {
         }
 
         do {
-            let decoded = try JSONDecoder().decode(MessagesResponse.self, from: data)
-            guard let text = decoded.content.first(where: { $0.type == "text" })?.text, !text.isEmpty else {
+            let decoded = try JSONDecoder().decode(GenerateContentResponse.self, from: data)
+            if let block = decoded.promptFeedback?.blockReason {
+                throw AIError.blockedByModel(reason: block)
+            }
+            guard let candidate = decoded.candidates?.first else {
                 throw AIError.invalidResponse
             }
+            if let finish = candidate.finishReason,
+               finish != "STOP" && finish != "MAX_TOKENS" {
+                throw AIError.blockedByModel(reason: finish)
+            }
+            let text = candidate.content?.parts?
+                .compactMap { $0.text }
+                .joined()
+                ?? ""
+            guard !text.isEmpty else { throw AIError.invalidResponse }
             return text
         } catch let aiError as AIError {
             throw aiError
@@ -91,30 +113,33 @@ struct AIService {
 
     // MARK: - Response shape
 
-    private struct MessagesResponse: Decodable {
-        let content: [ContentBlock]
-        let stopReason: String?
-        let usage: Usage?
-
-        enum CodingKeys: String, CodingKey {
-            case content
-            case stopReason = "stop_reason"
-            case usage
-        }
+    private struct GenerateContentResponse: Decodable {
+        let candidates: [Candidate]?
+        let promptFeedback: PromptFeedback?
+        let usageMetadata: UsageMetadata?
     }
 
-    private struct ContentBlock: Decodable {
-        let type: String
+    private struct Candidate: Decodable {
+        let content: Content?
+        let finishReason: String?
+    }
+
+    private struct Content: Decodable {
+        let role: String?
+        let parts: [Part]?
+    }
+
+    private struct Part: Decodable {
         let text: String?
     }
 
-    private struct Usage: Decodable {
-        let inputTokens: Int?
-        let outputTokens: Int?
+    private struct PromptFeedback: Decodable {
+        let blockReason: String?
+    }
 
-        enum CodingKeys: String, CodingKey {
-            case inputTokens = "input_tokens"
-            case outputTokens = "output_tokens"
-        }
+    private struct UsageMetadata: Decodable {
+        let promptTokenCount: Int?
+        let candidatesTokenCount: Int?
+        let totalTokenCount: Int?
     }
 }

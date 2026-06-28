@@ -111,6 +111,10 @@ struct ProgramGenerator {
         """
     }
 
+    /// JSON schema for Gemini structured output.
+    /// Notes:
+    /// - Gemini ignores `additionalProperties`, so it's omitted.
+    /// - Nullable fields use `nullable: true` instead of `anyOf: [{}, {null}]`.
     private func jsonSchema() -> [String: Any] {
         let exerciseEntry: [String: Any] = [
             "type": "object",
@@ -118,12 +122,11 @@ struct ProgramGenerator {
                 "exercise_id": ["type": "string"],
                 "sets": ["type": "integer"],
                 "reps": ["type": "string"],
-                "weight_kg": ["anyOf": [["type": "number"], ["type": "null"]]],
+                "weight_kg": ["type": "number", "nullable": true],
                 "rest_seconds": ["type": "integer"],
                 "notes": ["type": "string"],
             ],
             "required": ["exercise_id", "sets", "reps", "rest_seconds", "notes", "weight_kg"],
-            "additionalProperties": false,
         ]
 
         let day: [String: Any] = [
@@ -134,7 +137,6 @@ struct ProgramGenerator {
                 "exercises": ["type": "array", "items": exerciseEntry],
             ],
             "required": ["day_number", "focus", "exercises"],
-            "additionalProperties": false,
         ]
 
         let week: [String: Any] = [
@@ -145,7 +147,6 @@ struct ProgramGenerator {
                 "days": ["type": "array", "items": day],
             ],
             "required": ["week_number", "is_deload", "days"],
-            "additionalProperties": false,
         ]
 
         return [
@@ -156,7 +157,6 @@ struct ProgramGenerator {
                 "weeks": ["type": "array", "items": week],
             ],
             "required": ["program_name", "rationale", "weeks"],
-            "additionalProperties": false,
         ]
     }
 

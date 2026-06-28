@@ -3,7 +3,7 @@ import Security
 
 enum KeychainStore {
     enum Key: String {
-        case anthropicAPIKey = "anthropic_api_key"
+        case geminiAPIKey = "gemini_api_key"
     }
 
     static func save(_ value: String, for key: Key) {
