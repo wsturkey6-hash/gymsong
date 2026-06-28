@@ -40,7 +40,7 @@ struct ProgramGenerator {
                 system: systemPrompt,
                 user: userPrompt,
                 jsonSchema: schema,
-                maxTokens: 16000
+                maxTokens: 32000
             )
         } catch let err as AIError {
             throw ProgramGeneratorError.aiFailure(err)
@@ -79,6 +79,11 @@ struct ProgramGenerator {
         - 所有 exercise_id 必須來自使用者提供的 available_exercises 清單。不可自創。
         - 寫 notes 給使用者看時請用繁體中文。
         - 第一週的主要動作 weight_kg 可填 null，附 notes 提醒使用者選擇保守的試重。
+
+        重要：節省回應長度，避免 JSON 被截斷
+        - rationale 欄位用一句話總結整份課表的設計邏輯，最多 80 個字。
+        - 每個 exercise 的 notes 欄位最多 25 個字，只寫關鍵提醒（例如「保守起步、技術為先」）。不要重複動作名稱或基本說明。
+        - day 的 focus 欄位用 4-8 個字（例如「下肢肌力」「上肢推+核心」）。
         """
     }
 

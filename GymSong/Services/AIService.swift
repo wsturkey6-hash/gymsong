@@ -7,6 +7,7 @@ enum AIError: LocalizedError {
     case decoding(Error)
     case network(Error)
     case blockedByModel(reason: String)
+    case truncated
 
     var errorDescription: String? {
         switch self {
@@ -16,6 +17,7 @@ enum AIError: LocalizedError {
         case .decoding(let err): return "解析回應失敗：\(err.localizedDescription)"
         case .network(let err): return "網路錯誤：\(err.localizedDescription)"
         case .blockedByModel(let reason): return "模型拒絕回應：\(reason)"
+        case .truncated: return "AI 回應被截斷（超過 max_tokens）。試試減少週數，或在程式裡把 maxTokens 調高。"
         }
     }
 }
@@ -94,9 +96,13 @@ struct AIService {
             guard let candidate = decoded.candidates?.first else {
                 throw AIError.invalidResponse
             }
-            if let finish = candidate.finishReason,
-               finish != "STOP" && finish != "MAX_TOKENS" {
-                throw AIError.blockedByModel(reason: finish)
+            if let finish = candidate.finishReason {
+                if finish == "MAX_TOKENS" {
+                    throw AIError.truncated
+                }
+                if finish != "STOP" {
+                    throw AIError.blockedByModel(reason: finish)
+                }
             }
             let text = candidate.content?.parts?
                 .compactMap { $0.text }
