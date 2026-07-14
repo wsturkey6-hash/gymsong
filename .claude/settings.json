@@ -1,0 +1,16 @@
+{
+  "autoCompactEnabled": true,
+  "autoCompactWindow": 700000,
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreCompact\",\"additionalContext\":\"壓縮此對話時，摘要必須完整保留：(1) 所有架構決策及其理由（技術選型、SwiftData 資料模型、AI prompt 設計、API 介面約定）；(2) TODO 清單與各項進度狀態；(3) 尚未解決的問題與已知 bug；(4) 關鍵檔案路徑。可以省略：冗長的工具輸出、已完成工作的過程細節。\"}}'"
+          }
+        ]
+      }
+    ]
+  }
+}
