@@ -79,6 +79,7 @@ struct ProgramGenerator {
         - 所有 exercise_id 必須來自使用者提供的 available_exercises 清單。不可自創。
         - 寫 notes 給使用者看時請用繁體中文。
         - 第一週的主要動作 weight_kg 可填 null，附 notes 提醒使用者選擇保守的試重。
+        - 每一天（day）的 exercises 陣列必須「恰好 4 個動作」，不多不少：前 3 個是主要複合動作（大肌群、多關節，如深蹲/硬舉/臥推/肩推/引體/划船類），第 4 個是輔助動作（單一肌群或核心）。動作不是越多越好，精簡勝過堆疊。
 
         重要：節省回應長度，避免 JSON 被截斷
         - rationale 欄位用一句話總結整份課表的設計邏輯，最多 80 個字。
@@ -128,10 +129,9 @@ struct ProgramGenerator {
                 "sets": ["type": "integer"],
                 "reps": ["type": "string"],
                 "weight_kg": ["type": "number", "nullable": true],
-                "rest_seconds": ["type": "integer"],
                 "notes": ["type": "string"],
             ],
-            "required": ["exercise_id", "sets", "reps", "rest_seconds", "notes", "weight_kg"],
+            "required": ["exercise_id", "sets", "reps", "notes", "weight_kg"],
         ]
 
         let day: [String: Any] = [
@@ -208,7 +208,6 @@ struct ProgramGenerator {
         let sets: Int
         let reps: String
         let weightKg: Double?
-        let restSeconds: Int
         let notes: String
 
         enum CodingKeys: String, CodingKey {
@@ -216,7 +215,6 @@ struct ProgramGenerator {
             case sets
             case reps
             case weightKg = "weight_kg"
-            case restSeconds = "rest_seconds"
             case notes
         }
     }
@@ -280,7 +278,7 @@ struct ProgramGenerator {
                         plannedSets: item.sets,
                         plannedReps: item.reps,
                         plannedWeight: item.weightKg,
-                        plannedRestSeconds: item.restSeconds,
+                        plannedRestSeconds: profile.defaultRestSeconds,
                         notes: item.notes
                     )
                     modelContext.insert(se)

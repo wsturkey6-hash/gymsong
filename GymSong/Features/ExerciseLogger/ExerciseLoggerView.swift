@@ -25,6 +25,8 @@ struct ExerciseLoggerView: View {
                 if sortedExercises.isEmpty {
                     ContentUnavailableView("這個 session 沒有動作", systemImage: "questionmark.folder")
                 } else {
+                    exercisePagerHeader
+
                     TabView(selection: $selectedExerciseIndex) {
                         ForEach(Array(sortedExercises.enumerated()), id: \.element.id) { idx, se in
                             ExercisePagerCard(sessionExercise: se, sessionId: session.id.uuidString)
@@ -32,6 +34,7 @@ struct ExerciseLoggerView: View {
                         }
                     }
                     .tabViewStyle(.page(indexDisplayMode: .always))
+                    .indexViewStyle(.page(backgroundDisplayMode: .always))
                 }
             }
         }
@@ -55,6 +58,39 @@ struct ExerciseLoggerView: View {
                 session.startedAt = .now
             }
         }
+    }
+
+    private var exercisePagerHeader: some View {
+        let count = sortedExercises.count
+        let clampedIndex = min(max(selectedExerciseIndex, 0), count - 1)
+        let currentName = sortedExercises[clampedIndex].exercise?.name ?? "未知動作"
+
+        return HStack {
+            Button {
+                withAnimation { selectedExerciseIndex = max(selectedExerciseIndex - 1, 0) }
+            } label: {
+                Image(systemName: "chevron.left")
+            }
+            .disabled(selectedExerciseIndex == 0)
+
+            Spacer()
+
+            Text("第 \(clampedIndex + 1) / \(count) 個動作 · \(currentName)")
+                .font(.subheadline.bold())
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+
+            Spacer()
+
+            Button {
+                withAnimation { selectedExerciseIndex = min(selectedExerciseIndex + 1, count - 1) }
+            } label: {
+                Image(systemName: "chevron.right")
+            }
+            .disabled(selectedExerciseIndex == count - 1)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
     }
 
     private func markComplete() {
@@ -122,6 +158,8 @@ private struct ExercisePagerCard: View {
 
                 planCard
 
+                restEditor
+
                 if !sortedLogs.isEmpty {
                     loggedSetsList
                 }
@@ -162,7 +200,6 @@ private struct ExercisePagerCard: View {
                 stat("組數", "\(sortedLogs.count)/\(sessionExercise.plannedSets)")
                 stat("每組次數", sessionExercise.plannedReps)
                 stat("重量", weightText)
-                stat("休息", "\(sessionExercise.plannedRestSeconds)s")
             }
             if let notes = sessionExercise.notes, !notes.isEmpty {
                 Text(notes).font(.caption).foregroundStyle(.secondary)
@@ -178,6 +215,27 @@ private struct ExercisePagerCard: View {
             Text(value).font(.subheadline.bold())
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var restEditor: some View {
+        Stepper(value: $sessionExercise.plannedRestSeconds, in: 30...600, step: 15) {
+            Text("組間休息：\(formatRest(sessionExercise.plannedRestSeconds))")
+                .font(.subheadline.bold())
+        }
+        .padding()
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func formatRest(_ seconds: Int) -> String {
+        let minutes = seconds / 60
+        let remainder = seconds % 60
+        if minutes == 0 {
+            return "\(remainder) 秒"
+        } else if remainder == 0 {
+            return "\(minutes) 分鐘"
+        } else {
+            return "\(minutes) 分 \(remainder) 秒"
+        }
     }
 
     private var loggedSetsList: some View {
@@ -245,11 +303,11 @@ private struct ExercisePagerCard: View {
     }
 
     private func logSet() {
+        let priorCount = sortedLogs.count
         let now = Date.now
         let restAfter = sortedLogs.last.map { Int(now.timeIntervalSince($0.completedAt)) }
 
         let log = SetLog(
-            sessionExercise: sessionExercise,
             setIndex: nextSetIndex,
             actualReps: repsInput,
             actualWeight: weightInput,
@@ -257,11 +315,12 @@ private struct ExercisePagerCard: View {
             restAfterSeconds: restAfter
         )
         modelContext.insert(log)
+        sessionExercise.setLogs.append(log)  // Mutate the observed parent collection so the view refreshes immediately.
         try? modelContext.save()
 
         // Auto-start rest timer if more sets remain.
         let plannedSets = sessionExercise.plannedSets
-        let justLoggedCount = sortedLogs.count + 1  // sortedLogs is from the previous render
+        let justLoggedCount = priorCount + 1
         if justLoggedCount < plannedSets {
             let exerciseName = sessionExercise.exercise?.name ?? "下一組"
             let nextLabel = "第 \(justLoggedCount + 1) 組 / 共 \(plannedSets) 組"
